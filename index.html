@@ -30,7 +30,11 @@
 		}
 		
 		.green{
-			background-color: green;
+			background-color: green;			
+		}
+		
+		.active{
+			//border: 2px solid blue;
 		}
 	</style>
 </head>
@@ -47,10 +51,10 @@
 		Enter new task: 
 		<input id="taskentry" name="taskentry" type="text"></input>
 		<div id="tasklist" class="tasklist">
-			<div class="task" id="line1"></div>
-			<div class="task" id="line2"></div>
-			<div class="task" id="line3"></div>
-			<div class="task" id="line4"></div>									
+			<input type="text" class="task" id="line1">
+			<input type="text" class="task" id="line2">
+			<input type="text" class="task" id="line3">
+			<input type="text" class="task" id="line4">									
 			
 		</div>
 	</div>
@@ -88,17 +92,114 @@
 		taskentry.addEventListener("keydown", checkEnter, false);
 		
 		markComplete1 = function(e){
-			line1.classList.add("green");
+			if(line1.innerHTML != ""){
+				line1.classList.add("green");
+			}
+			line1.classList.add("active");
+			line2.classList.remove("active");
+			line3.classList.remove("active");
+			line4.classList.remove("active");
 		}
 		markComplete2 = function(e){
-			line2.classList.add("green");
+			if(line2.innerHTML != ""){
+				line2.classList.add("green");
+			}
+			line2.classList.add("active");
+			line1.classList.remove("active");
+			line3.classList.remove("active");
+			line4.classList.remove("active");
 		}
 		markComplete3 = function(e){
-			line3.classList.add("green");
+			if(line3.innerHTML != ""){
+				line3.classList.add("green");
+			}
+			line3.classList.add("active");
+			line1.classList.remove("active");
+			line2.classList.remove("active");
+			line4.classList.remove("active");
 		}
 		markComplete4 = function(e){
-			line4.classList.add("green");
+			if(line4.innerHTML != ""){
+				line4.classList.add("green");
+			}
+			line4.classList.add("active");
+			line1.classList.remove("active");
+			line2.classList.remove("active");
+			line3.classList.remove("active");
 		}
+		
+		/*var getFocus = function(){
+			line1.focus();
+			console.log('focus');
+		}*/
+		
+		var handleKeyDown = function(e){
+			console.log("Keyboard down");
+			console.dir(e);
+		}
+		
+		var handleInputFocus = function(e){
+			console.log("focus");
+			window.addEventListener("keydown", handleKeyDown, false);
+		}
+		
+		line1.addEventListener("focus", handleInputFocus, false);
+		line2.addEventListener("focus", handleInputFocus, false);
+		
+		var checkDown1 = function(e){
+			if(e.keyCode == 40){
+				console.log("down");
+				line2.focus();
+				//line1.removeEventListener("keydown", checkDown1, false);
+			}
+		}
+		
+		var checkUp2 = function(e){
+			if(e.keyCode == 38){
+				console.log("up");
+				line1.focus();
+				//line2.removeEventListener("keydown", checkUp2, false);
+			}
+		}
+		
+		var checkDown2 = function(e){
+			if(e.keyCode == 40){
+				console.log("down");
+				line3.focus();
+				//line2.removeEventListener("keydown", checkDown2, false);
+			}
+		}
+		
+		var checkUp3 = function(e){
+			if(e.keyCode == 38){
+				console.log("up");
+				line2.focus();
+				//line3.removeEventListener("keydown", checkUp3, false);
+			}
+		}
+		
+		var checkDown3 = function(e){
+			if(e.keyCode == 40){
+				console.log("down");
+				line4.focus();
+				//line3.removeEventListener("keydown", checkDown3, false);
+			}
+		}
+		
+		var checkUp4 = function(e){
+			if(e.keyCode == 38){
+				console.log("up");
+				line3.focus();
+				//line4.removeEventListener("keydown", checkUp4, false);
+			}
+		}
+		
+		line1.addEventListener("keydown", checkDown1, false);
+		line2.addEventListener("keydown", checkDown2, false);
+		line3.addEventListener("keydown", checkDown3, false);
+		line2.addEventListener("keydown", checkUp2, false);
+		line3.addEventListener("keydown", checkUp3, false);
+		line4.addEventListener("keydown", checkUp4, false);
 		
 		line1.addEventListener("click", markComplete1, false);
 		line2.addEventListener("click", markComplete2, false);

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Todo_Part1</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="author" content="The Chopping Block, Inc." />
+	<meta name="geo.country" content="US" />
+	<meta name="dc.language" content="en" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	
+	<link rel="stylesheet" href="styles.css" type="text/css" media="screen" charset="utf-8" />
+	
+	<style type="text/css" media="screen">		
+		/*local styles if any (quick tests and local only overrides)*/
+		
+		.wrap{
+			
+			width: 300px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		.task{
+			border-bottom: 1px dotted black;
+			height: 30px;
+		}
+		
+		.green{
+			background-color: #5CFF1D;			
+		}
+		
+		.active{
+			border: 2px solid blue;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="wrap" >
+		<h1>Project: Todo_Part1</h1>
+		<ul>
+			<li>1. When you type in a new task in the entry field and hit the Enter key, it should be added to the top of the list</li>
+			<li>2. Clicking on an item should mark it as completed (add a CSS style of some sort to indicate this)</li>
+			<li>3. In addition to clicking, you should be able to use keys to navigate the list. When an element is "active", apply a CSS class. Hitting the Spacebar will complete the active item. Using the up and down arrows will change which item is active.</li>
+			<li></li>
+		</ul>
+		Enter new task: 
+		<input id="taskentry" name="taskentry" type="text"></input>
+		<div id="tasklist" class="tasklist">
+			<div class="task" id="line1"></div>
+			<div class="task" id="line2"></div>
+			<div class="task" id="line3"></div>
+			<div class="task" id="line4"></div>									
+			
+		</div>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+		var taskentry = document.getElementById('taskentry');
+		var line1 = document.getElementById('line1');
+		var line2 = document.getElementById('line2');
+		var line3 = document.getElementById('line3');
+		var line4 = document.getElementById('line4');
+		
+		handleFormSubmit = function(e){
+			console.log("Form was submitted");
+			
+			e.preventDefault();
+		}
+		
+		checkEnter = function(e){
+			if(e.keyCode == 13){
+				console.log("Hit enter");
+				if(line1.innerHTML == ""){
+					line1.innerHTML = taskentry.value;
+				}
+				else if(line2.innerHTML == ""){
+					line2.innerHTML = taskentry.value;
+				}
+				else if(line3.innerHTML == ""){
+					line3.innerHTML = taskentry.value;
+				}
+				else if(line4.innerHTML == ""){
+					line4.innerHTML = taskentry.value;
+				}
+			}			
+		}
+		
+		taskentry.addEventListener("keydown", checkEnter, false);
+		
+		markComplete1 = function(e){
+			line1.classList.add("active");
+			line2.classList.remove("active");
+			line3.classList.remove("active");
+			line4.classList.remove("active");
+			window.addEventListener("keydown", checkDown1, false);
+			window.removeEventListener("keydown", checkDown2, false);
+			window.removeEventListener("keydown", checkDown3, false);
+			window.removeEventListener("keydown", checkDown4, false);
+		}
+		
+		
+		
+		setComplete1 = function(e){
+			if(line1.innerHTML != ""){
+				line1.classList.add("green");
+			}
+		}
+		
+		markComplete2 = function(e){
+			line2.classList.add("active");
+			line1.classList.remove("active");
+			line3.classList.remove("active");
+			line4.classList.remove("active");
+			window.addEventListener("keydown", checkDown2, false);
+			window.removeEventListener("keydown", checkDown1, false);
+			window.removeEventListener("keydown", checkDown3, false);
+			window.removeEventListener("keydown", checkDown4, false);
+		}
+		
+		setComplete2 = function(e){
+			if(line2.innerHTML != ""){
+				line2.classList.add("green");
+			}
+		}
+		
+		markComplete3 = function(e){
+			line3.classList.add("active");
+			line1.classList.remove("active");
+			line2.classList.remove("active");
+			line4.classList.remove("active");
+			window.addEventListener("keydown", checkDown3, false);
+			window.removeEventListener("keydown", checkDown1, false);
+			window.removeEventListener("keydown", checkDown2, false);
+			window.removeEventListener("keydown", checkDown4, false);
+		}
+		
+		setComplete3 = function(e){
+			if(line3.innerHTML != ""){
+				line3.classList.add("green");
+			}
+		}
+		
+		markComplete4 = function(e){
+			line4.classList.add("active");
+			line1.classList.remove("active");
+			line2.classList.remove("active");
+			line3.classList.remove("active");
+			window.addEventListener("keydown", checkDown4, false);
+			window.removeEventListener("keydown", checkDown2, false);
+			window.removeEventListener("keydown", checkDown3, false);
+			window.removeEventListener("keydown", checkDown1, false);
+		}
+		
+		setComplete4 = function(e){
+			if(line4.innerHTML != ""){
+				line4.classList.add("green");
+			}
+		}
+		
+		line1.addEventListener("click", markComplete1, false);
+		line2.addEventListener("click", markComplete2, false);
+		line3.addEventListener("click", markComplete3, false);
+		line4.addEventListener("click", markComplete4, false);
+		line1.addEventListener("click", setComplete1, false);
+		line2.addEventListener("click", setComplete2, false);
+		line3.addEventListener("click", setComplete3, false);
+		line4.addEventListener("click", setComplete4, false);
+		window.addEventListener("keydown", checkDown1, false);
+		window.addEventListener("keydown", checkDown2, false);
+		window.addEventListener("keydown", checkDown3, false);
+		window.addEventListener("keydown", checkDown4, false);
+		
+		markComplete1();
+		
+		/*var getFocus = function(){
+			line1.focus();
+			console.log('focus');
+		}*/
+		
+		var handleKeyDown = function(e){
+			console.log("Keyboard down");
+			console.dir(e);
+		}
+		
+		var handleInputFocus = function(e){
+			console.log("focus");
+			window.addEventListener("keydown", handleKeyDown, false);
+		}
+		/*
+		line1.addEventListener("focus", handleInputFocus, false);
+		line2.addEventListener("focus", handleInputFocus, false);
+		*/
+		
+		var checkDown1 = function(e){
+			console.log('ran checkDown1');
+			if (line1.className.match(/\bactive\b/)){
+				console.log('1 is active');
+				if(e.keyCode == 40){
+					console.log("down");
+					markComplete2();
+					window.removeEventListener("keydown", checkDown1, false);
+					window.addEventListener("keydown", checkDown2, false);
+				}
+				if(e.keyCode == 32){
+					console.log("space");
+					setComplete1();
+				}
+			}
+		}
+		
+		var checkDown2 = function(e){
+			if (line2.className.match(/\bactive\b/)){
+				console.log('2 is active');
+				if(e.keyCode == 40){
+					console.log("down");
+					markComplete3();
+					window.removeEventListener("keydown", checkDown2, false);
+					window.addEventListener("keydown", checkDown3, false);
+				}
+				if(e.keyCode == 38){
+					console.log("up");
+					markComplete1();
+					window.removeEventListener("keydown", checkDown2, false);
+					window.addEventListener("keydown", checkDown1, false);
+				}
+				if(e.keyCode == 32){
+					console.log("space");
+					setComplete2();
+				}
+			}
+		}
+		
+		var checkDown3 = function(e){
+			if (line3.className.match(/\bactive\b/)){
+				console.log('3 is active');
+				if(e.keyCode == 40){
+					console.log("down");
+					markComplete4();
+					window.removeEventListener("keydown", checkDown3, false);
+					window.addEventListener("keydown", checkDown4, false);
+				}
+				if(e.keyCode == 38){
+					console.log("up");
+					markComplete2();
+					window.removeEventListener("keydown", checkDown3, false);
+					window.addEventListener("keydown", checkDown2, false);
+				}
+				if(e.keyCode == 32){
+					console.log("space");
+					setComplete3();
+				}
+			}
+		}
+		
+		var checkDown4 = function(e){
+			if (line4.className.match(/\bactive\b/)){
+				console.log('4 is active');
+				if(e.keyCode == 38){
+					console.log("up");
+					markComplete3();
+					window.removeEventListener("keydown", checkDown4, false);
+					window.addEventListener("keydown", checkDown3, false);
+				}
+				if(e.keyCode == 32){
+					console.log("space");
+					setComplete4();
+				}
+			}
+		}
+			
+	</script>
+	
+</body>
+</html>
